@@ -69,6 +69,10 @@ func NewClient(config *common.Config) (*Client, error) {
 		kgo.ProducerBatchCompression(kgo.SnappyCompression()),
 	}
 
+	if config.ConsumerGroup != "" {
+		consumerOpts = append(consumerOpts, kgo.ConsumerGroup(config.ConsumerGroup))
+	}
+
 	if config.CACertPath != "" {
 		caCert, err := os.ReadFile(config.CACertPath)
 		if err == nil {
